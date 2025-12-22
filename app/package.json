@@ -7,12 +7,17 @@
     "email": "diegomartinmarmol@gmail.com",
     "url": "http://www.diegomarmol.com"
   },
+  "engines": {
+    "npm": ">=11.0.0",
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "local": "dotenv -e ./.env.local -- next dev",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "16.1.0",
@@ -27,6 +32,9 @@
     "dotenv-cli": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.0",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "lint-staged": "^16.2.7",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
