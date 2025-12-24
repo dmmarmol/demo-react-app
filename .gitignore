@@ -18,6 +18,8 @@ node_modules
 out/
 .out/
 
+# Environment variables
+.env
 # production
 build
 
@@ -59,3 +61,4 @@ firebase-debug.log
 
 database/
 .legacy
+scripts/**/*.json

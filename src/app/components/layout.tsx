@@ -1,16 +1,22 @@
-// import Navbar from './navbar'
-// import Footer from './footer'
-import '@styles/globals.css'
+import Navbar from '@/app/components/Navbar'
  
-export default function Layout({ children }) {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body>
-        <main className="flex min-h-screen flex-col items-center justify-center p-24">
-          <div>The Navbar</div>
-          <main>{children}</main>
-          <div>The Footer</div>
-        </main>
+        <div className="grid min-h-screen w-screen grid-cols-12">
+          <div className="col-span-3 min-h-screen border-r border-gray-200 bg-white">
+            <Navbar />
+          </div>
+          <main className="col-span-9 flex min-h-screen flex-col bg-gray-50 p-10">
+            <div className="flex-1">{children}</div>
+            <div className="border-t border-gray-200 pt-4 text-sm text-gray-500">The Footer</div>
+          </main>
+        </div>
       </body>
     </html>
   )
