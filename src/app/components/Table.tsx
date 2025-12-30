@@ -1,8 +1,10 @@
-type TableProps<Row> = {
+import { ReactNode } from "react";
+
+type TableProps<Row extends Record<string, ReactNode>> = {
   data: Row[];
 };
 
-export default function Table<Row>({ data }: TableProps<Row>) {
+export default function Table<Row extends Record<string, ReactNode>>({ data }: TableProps<Row>) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse border border-gray-300">
