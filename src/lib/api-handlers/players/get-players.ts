@@ -1,23 +1,14 @@
 import { getServerFirestore } from '@/firebase/server'
+import { NotFoundError } from '@/lib/errors/api-error';
+import { Player } from './players-types';
 
-interface Player {
-    id: string;
-    name: string;
-    position: string;
-    nationality: string;
-    team: string;
-    shirtNumber: number;
-    age: number;
-    appearances: number;
-    goals: number;
-    assists: number;
-    yellowCards: number;
-    minutesPlayed: number;
-}
-
-interface GetPlayersResponse {
+export interface GetPlayersResponse {
     count: number;
     results: Player[];
+}
+
+function sortPlayers(a: Player, b: Player): number {
+    return a.team.localeCompare(b.team);
 }
 
 export async function getPlayersHandler(): Promise<GetPlayersResponse> {
@@ -26,7 +17,7 @@ export async function getPlayersHandler(): Promise<GetPlayersResponse> {
     const docSnap = await docRef.get()
     
     if (!docSnap.exists) {
-        return { count: 0, results: [] }
+        throw new NotFoundError('No players were found');
     }
     
     const data = docSnap.data()
@@ -40,6 +31,6 @@ export async function getPlayersHandler(): Promise<GetPlayersResponse> {
     
     return {
         count: results.length,
-        results,
+        results: results.sort(sortPlayers),
     }
 }

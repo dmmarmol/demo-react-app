@@ -1,4 +1,6 @@
 import Table, { BaseColumn, TableColumn } from '@/app/components/Table';
+import { getPlayersRepository } from '@/repository/players/get-players-repository';
+import { Player } from '@/lib/api-handlers/players/players-types';
 import { ReactNode } from 'react';
 
 type DataObject = {
@@ -8,39 +10,34 @@ type DataObject = {
 }
 
 type DataColumn = BaseColumn & {
-    id: number;
     label: string;
 }
 
-export default function PlayersSection() {
-    const data: DataObject[] = [
-        { id: 1, name: 'Item 1', category: 'A' },
-        { id: 2, name: 'Item 2', category: 'B' },
-        { id: 3, name: 'Item 3', category: 'A' },
-        { id: 4, name: 'Item 4', category: 'C' },
-    ];
+export default async function PlayersSection() {
+    const result = await getPlayersRepository();
+    const data: Player[] = result.results;
 
     const columns: TableColumn<DataColumn>[] = [
-        { id: 1, label: 'Id', onRender: renderRowHeader },
+        { id: 1, label: 'N#', onRender: renderRowHeader },
         { id: 2, label: 'Name', onRender: renderRowHeader },
-        { id: 3, label: 'Actions', onRender: renderRowHeader },
+        { id: 3, label: 'Position', onRender: renderRowHeader },
+        { id: 3, label: 'Team', onRender: renderRowHeader },
     ];
 
-    function renderRowData(row: DataObject): ReactNode {
+    function renderRowData(row: Player): ReactNode {
         return (
             <tr key={row.id} className="hover:bg-gray-50">
-              <td className="border border-gray-300 px-4 py-2">{row.id}</td>
+              <td className="border border-gray-300 px-4 py-2">{row.shirtNumber}</td>
               <td className="border border-gray-300 px-4 py-2">{row.name}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                <button className="text-blue-500 hover:underline">Edit</button>
-              </td>
+              <td className="border border-gray-300 px-4 py-2">{row.position}</td>
+              <td className="border border-gray-300 px-4 py-2">{row.team}</td>
             </tr>
         )
     }
 
-    function renderRowHeader(column: DataColumn): ReactNode {
+    function renderRowHeader(column: DataColumn, index: number): ReactNode {
         return (
-            <th key={column.id as string | number | bigint} className="border border-gray-300 px-4 py-2 text-left">
+            <th key={`${index}-${column.label}`} className="border border-gray-300 px-4 py-2 text-left">
               {column.label}
             </th>
         )
@@ -62,7 +59,7 @@ export default function PlayersSection() {
                 </button>
             </div>
 
-            <Table<DataObject, DataColumn> data={data} columns={columns} onRenderRow={renderRowData} />
+            <Table<Player, DataColumn> data={data} columns={columns} onRenderRow={renderRowData} />
         </div>
     )
 }

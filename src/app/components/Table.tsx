@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 export type BaseColumn = { id: string | number, [key: string]: unknown };
-export type BaseRow = Record<string, ReactNode>;
+export type BaseRow = unknown;
 type OnRender<T> = (data: T, index: number, array: T[]) => ReactNode;
 
 export type TableColumn<T extends BaseColumn> = T & {
