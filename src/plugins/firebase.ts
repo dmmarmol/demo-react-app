@@ -6,7 +6,8 @@ import {
 } from '@/firebase/client'
 import { 
   initializeServerApp, 
-  getServerFirestoreSDK 
+  getServerFirestoreSDK,
+  getServerFirestore as getAdminFirestore 
 } from '@/firebase/server'
 
 /**
@@ -41,8 +42,8 @@ export function getFirebaseClientApp(): FirebaseApp {
 }
 
 /**
- * Get or initialize Firebase server app
- * Server-only - throws error if called in browser
+ * Get or initialize Firebase server app (Client SDK - deprecated for server use)
+ * Prefer using getServerFirestore() for server-side operations
  */
 export function getFirebaseServerApp(): FirebaseApp {
   if (typeof window !== 'undefined') {
@@ -52,21 +53,39 @@ export function getFirebaseServerApp(): FirebaseApp {
   const registry = getRegistry()
   if (registry.server) return registry.server
 
-  registry.server = initializeServerApp()
+  // Initialize using Admin SDK through the server module
+  initializeServerApp()
+  
+  // Return a dummy app reference for backwards compatibility
+  // Actual Firestore operations should use getServerFirestore() instead
+  const dummyApp = {
+    name: 'server',
+  } as unknown as FirebaseApp
+  
+  registry.server = dummyApp
   return registry.server
 }
 
 /**
  * Get Firestore instance for client operations
  */
-export const getClientFirestore = () => getClientFirestoreSDK(getFirebaseClientApp())
+export const getClientFirestore = () => {
+  const app = getFirebaseClientApp();
+  return getClientFirestoreSDK(app);
+}
 
 /**
- * Get Firestore instance for server operations
+ * Get Firestore instance for server operations using Admin SDK
+ * This is the recommended way to access Firestore on the server
  */
-export const getServerFirestore = () => getServerFirestoreSDK(getFirebaseServerApp())
+export const getServerFirestore = () => {
+  return getAdminFirestore()
+}
 
 /**
  * Get Analytics instance if supported (client-only)
  */
-export const getClientAnalytics = () => getClientAnalyticsSDK(getFirebaseClientApp())
+export const getClientAnalytics = () => {
+  const app = getFirebaseClientApp();
+  return getClientAnalyticsSDK(app)
+}
