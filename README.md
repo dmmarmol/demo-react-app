@@ -3,6 +3,30 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with 
 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Nextjs Routing
+
+Next.js only treats folders as routes if they contain special files like `page.tsx`, `layout.tsx`, or `route.ts`. Folders without these files (like `components/`, `sections/`, `styles/`) are ignored by the router.
+
+### Sort routes using groups
+
+```
+app/
+  (routes)/
+    page.tsx           → Still route "/"
+    players/
+      page.tsx         → Still route "/players"
+```
+
+### Co-locate files with routes:
+
+```
+app/
+  players/
+    page.tsx
+    components.tsx     ← Components specific to /players
+    utils.ts
+```
+
 ## Error handling using nextjs
 
 Inspect how Next.JS handle errors natively

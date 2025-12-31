@@ -1,11 +1,15 @@
-"use client"
+'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Navbar() {
     const pathname = usePathname()
-    console.log('Current pathname:', pathname)
+    
+    useEffect(() => {
+        console.log('Current pathname:', pathname)
+    }, [pathname])
 
     const links = [
         { href: '/', label: 'Home', enabled: true },
