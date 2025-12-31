@@ -1,4 +1,5 @@
-import Table from '@/app/components/Table' 
+import Table, { BaseColumn, TableColumn } from '@/app/components/Table';
+import { ReactNode } from 'react';
 
 type DataObject = {
     id: number;
@@ -6,13 +7,44 @@ type DataObject = {
     category: string;
 }
 
+type DataColumn = BaseColumn & {
+    id: number;
+    label: string;
+}
+
 export default function PlayersSection() {
-    const data = [
+    const data: DataObject[] = [
         { id: 1, name: 'Item 1', category: 'A' },
         { id: 2, name: 'Item 2', category: 'B' },
         { id: 3, name: 'Item 3', category: 'A' },
         { id: 4, name: 'Item 4', category: 'C' },
     ];
+
+    const columns: TableColumn<DataColumn>[] = [
+        { id: 1, label: 'Id', onRender: renderRowHeader },
+        { id: 2, label: 'Name', onRender: renderRowHeader },
+        { id: 3, label: 'Actions', onRender: renderRowHeader },
+    ];
+
+    function renderRowData(row: DataObject): ReactNode {
+        return (
+            <tr key={row.id} className="hover:bg-gray-50">
+              <td className="border border-gray-300 px-4 py-2">{row.id}</td>
+              <td className="border border-gray-300 px-4 py-2">{row.name}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                <button className="text-blue-500 hover:underline">Edit</button>
+              </td>
+            </tr>
+        )
+    }
+
+    function renderRowHeader(column: DataColumn): ReactNode {
+        return (
+            <th key={column.id as string | number | bigint} className="border border-gray-300 px-4 py-2 text-left">
+              {column.label}
+            </th>
+        )
+    }
 
     return (
         <div className="w-full h-full flex flex-col gap-4 p-6">
@@ -30,7 +62,7 @@ export default function PlayersSection() {
                 </button>
             </div>
 
-            <Table<DataObject> data={data} />
+            <Table<DataObject, DataColumn> data={data} columns={columns} onRenderRow={renderRowData} />
         </div>
     )
 }
