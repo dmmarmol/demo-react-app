@@ -12,13 +12,14 @@
     "node": ">=24.0.0"
   },
   "scripts": {
+    "prepare": "husky",
     "local": "dotenv -e ./.env.local -- next dev",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed:firestore": "node scripts/seed-firestore/index.js",
-    "prepare": "husky"
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "test:coverage": "echo \"Warning: no test specified\" && exit 0"
   },
   "dependencies": {
     "@heroui/button": "^2.2.29",
