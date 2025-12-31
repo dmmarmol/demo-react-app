@@ -1,0 +1,18 @@
+@host = http://localhost
+@port = 13000
+@baseUrl = {{host}}:{{port}}/api
+
+GET {{baseUrl}}/players
+Accept: application/json
+###
+
+# POST {{baseUrl}}/players
+# Content-Type: application/json
+
+# {
+#   "name": "The Great Eatery",
+#   "address": "123 Food Lane",
+#   "cuisine": "Italian"
+# }
+# ###
+
