@@ -20,6 +20,7 @@ export default async function PlayersSection() {
     const columns: TableColumn<DataColumn>[] = [
         { id: 1, label: 'N#', onRender: renderRowHeader },
         { id: 2, label: 'Name', onRender: renderRowHeader },
+        { id: 2, label: 'Age', onRender: renderRowHeader },
         { id: 3, label: 'Position', onRender: renderRowHeader },
         { id: 3, label: 'Team', onRender: renderRowHeader },
     ];
@@ -29,6 +30,7 @@ export default async function PlayersSection() {
             <tr key={row.id} className="hover:bg-gray-50">
               <td className="border border-gray-300 px-4 py-2">{row.shirtNumber}</td>
               <td className="border border-gray-300 px-4 py-2">{row.name}</td>
+              <td className="border border-gray-300 px-4 py-2">{row.age}</td>
               <td className="border border-gray-300 px-4 py-2">{row.position}</td>
               <td className="border border-gray-300 px-4 py-2">{row.team}</td>
             </tr>
@@ -44,7 +46,7 @@ export default async function PlayersSection() {
     }
 
     return (
-        <div className="w-full h-full flex flex-col gap-4 p-6">
+        <div className="w-full h-full flex flex-col gap-4 p-6">            
             <div className="flex gap-4 items-end">
                 <input
                     type="text"
@@ -58,6 +60,8 @@ export default async function PlayersSection() {
                     Filter
                 </button>
             </div>
+
+            <h1 className="text-2xl font-bold text-gray-800">Season {result.season}</h1>
 
             <Table<Player, DataColumn> data={data} columns={columns} onRenderRow={renderRowData} />
         </div>
