@@ -1,4 +1,4 @@
-import Table from '@/app/components/Table' 
+import Table from '@/app/components/Table/Table' 
 
 type DataObject = {
     id: number;
