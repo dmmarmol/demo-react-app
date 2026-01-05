@@ -1,2 +1,12 @@
-@import "tailwindcss";
-@import "./theme.css";
+@import 'tailwindcss';
+@import './theme.css';
+
+a:not(.next-link) {
+    color: var(--color-primary-600);
+    transition: text-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+a:not(.next-link):hover {
+    text-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.3);
+}

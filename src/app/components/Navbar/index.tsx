@@ -25,8 +25,21 @@ export default function Navbar() {
                     alt="Logo"
                     className="h-16 w-16 rounded"
                 />
-                <div className="text-lg font-semibold text-gray-800">
-                    {process.env.APP_NAME}
+                <div className="text-lg font-semibold text-gray-800 flex flex-col">
+                    <span>{process.env.APP_NAME}</span>
+                    <div>
+                        <div className="text-sm text-gray-600">
+                            <p>
+                                Made by:{' '}
+                                <a
+                                    href={process.env.APP_AUTHOR_URL}
+                                    target="_blank"
+                                >
+                                    {process.env.APP_AUTHOR_NAME}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -39,6 +52,7 @@ export default function Navbar() {
                             key={link.href}
                             href={link.href}
                             className={[
+                                'next-link',
                                 'block w-full -mr-6 rounded-l-xl rounded-r-none py-2 px-6 text-md text-left transition-colors duration-150',
                                 'hover:bg-[var(--ui-bg)] hover:text-gray-100',
                                 isActive
