@@ -1,4 +1,5 @@
 import Navbar from '@/app/components/Navbar';
+import { ReduxProvider } from '@/store/provider';
 import '@/app/styles/globals.css';
 import { Metadata } from 'next';
 
@@ -6,25 +7,23 @@ export const metadata: Metadata = {
     title: process.env.APP_NAME,
 };
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
             <body>
-                <div className="grid min-h-screen w-screen grid-cols-12">
-                    <div className="col-span-3 min-h-screen border-r border-gray-200 bg-white">
-                        <Navbar />
-                    </div>
-                    <main className="col-span-9 flex min-h-screen flex-col bg-gray-50 p-10">
-                        <div className="flex-1">{children}</div>
-                        <div className="border-t border-gray-200 pt-4 text-sm text-gray-500">
-                            The Footer
+                <ReduxProvider>
+                    <div className="grid min-h-screen w-screen grid-cols-12">
+                        <div className="col-span-3 min-h-screen border-r border-gray-200 bg-white">
+                            <Navbar />
                         </div>
-                    </main>
-                </div>
+                        <main className="col-span-9 flex min-h-screen flex-col bg-gray-50 p-10">
+                            <div className="flex-1">{children}</div>
+                            <div className="border-t border-gray-200 pt-4 text-sm text-gray-500">
+                                The Footer
+                            </div>
+                        </main>
+                    </div>
+                </ReduxProvider>
             </body>
         </html>
     );
