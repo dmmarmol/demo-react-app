@@ -26,7 +26,6 @@ const playersSlice = createSlice({
     name: 'players',
     initialState,
     reducers: {
-        // Synchronous actions can be added here if needed
         setPlayers: (
             state,
             action: PayloadAction<{ data: Player[]; season: string }>,
